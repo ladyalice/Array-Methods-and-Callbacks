@@ -18745,82 +18745,41 @@ const fifaData = [
 (e) Winner of 2014 world cup final */
 
 
+console.log(fifaData[0]["Stage"])
 
-const newData = fifaData.filter(item => item.Year === 2014).map(item => item["Home Team Name"]);
-console.log(newData);
+fifaData.filter(function(item){
+	if (item["Year"] === 2014){
+		console.log(`Home team name: ${item["Home Team Name"]}.`);
+		console.log(`Away Team name: ${item["Away Team Name"]}.`)
+	}});
 
-const awayTeam = fifaData.filter(function(item){
-    return item.Year === 2014;
-}).map(function(item){
-    return item["Away Team Name"] 
-})
-console.log(awayTeam);
-
-const homeGoals = fifaData.filter(item => item.Year === 2014).map(item => item["Home Team Goals"])
-console.log(homeGoals.length);
-
-const awayGoals = fifaData.filter(function(item){
-    return item.Year === 2014
-}).map(function(item){
-    return item["Away Team Goals"];
-})
-console.log(awayGoals)
-
-//const winner = fifaData.
-
-
-
-
-
-//////ATTEMPT 1 - RETIRED ////////
-/// Other attempts not using array methods / using console log like a dufus/////
-
-
-// console.log(fifaData[0]["Stage"])
-
-// fifaData.filter(function(item){
-// 	if (item["Year"] === 2014){
-// 		console.log(`Home team name: ${item["Home Team Name"]}.`);
-// 		console.log(`Away Team name: ${item["Away Team Name"]}.`)
-// 	}});
-
-// //.map creates a new array so we can just make it equal to the const
-// //aka currentValue being accessed in the array
-// const goals = fifaData.map(function(item){
-// 	if (item["Year"] === 2014){
-// 		console.log( `Homie channel goals: ${item["Home Team Goals"]}`)
+//.map creates a new array so we can just make it equal to the const
+//aka currentValue being accessed in the array
+const goals = fifaData.map(function(item){
+	if (item["Year"] === 2014){
+		console.log( `Homie channel goals: ${item["Home Team Goals"]}`)
 		
 
-// 	}
+	}
 
-// } );
+} );
 
-////////////////////////////////////////
+//LESSON AGAIN because I need to learn it again
+//.map - way to return a new array with new type of data without tinkering the existing array
+
+
+
 
 /* Task 2: Create a function called  getFinals that takes `data` as an argument and returns an array of objects with only finals data */
+//just for practice if it was a for loop:
 
-function getFinals(data){
-    let newArray = [];
-    for(let i = 0; i < data.length; i++){
-        
-        if(data[i].Stage === "Quarter-finals"){
-             //newArray.push(data[i]["Stage"]);
-             newArray.push(data[i]);
-        } else if (data[i].Stage === "Semi-finals"){
-             //newArray.push(data[i]["Stage"]);
-             //later on in Task 3 they want the years, so we need an array with all the data... strangely worded question
-             newArray.push(data[i]);
-        }
-    
-    }
-return newArray
-}
+ArrayTest = [
+{bruh: true,
+cool: "yes"},
+{bruh: false,
+cool: "Whats"},
 
-console.log(getFinals(fifaData));
-
-
-
-//////ATTEMPT 1 - RETIRED ////////
+]
 
 //Kook city = Break stuff down. If it isn't working, keep console.logging 
 //to the most basic things you know about JS...
@@ -18849,105 +18808,86 @@ console.log(getFinals(fifaData));
 
 //LETS TRY THIS SHIT AGAIN
 
-// function getFinalsFORREAL(data){
-// 	const newArray = [];
+function getFinalsFORREAL(data){
+	const newArray = [];
 
-// 	for(let i = 0; i < data.length ; i++){
-// 		//you can't do data.bruh as that key above because you're not support
-// 		//to know the keys in that. this is a function getting any random array set..
-// 		//now you could do an if statement to filter out things..
+	for(let i = 0; i < data.length ; i++){
+		//you can't do data.bruh as that key above because you're not support
+		//to know the keys in that. this is a function getting any random array set..
+		//now you could do an if statement to filter out things..
 
 
-// 		//newArray.push(data[i])
+		//newArray.push(data[i])
 
-// 		//if you don't do a return / console log you ain't gonna 
-// 		//get nothing back if you're trying to console log something
+		//if you don't do a return / console log you ain't gonna 
+		//get nothing back if you're trying to console log something
 		 
-// 		 if (data[i].bruh === true)
-// 		 {
-// 		 	newArray.push("It's true")
-// 		 }
+		 if (data[i].bruh === true)
+		 {
+		 	newArray.push("It's true")
+		 }
 
 
-// 	}
-// 	//return AFTER the for statement so you don't
-// 	//end the for loop
-// 		return newArray
+	}
+	//return AFTER the for statement so you don't
+	//end the for loop
+		return newArray
 
-// };
-
-
-// console.log(getFinalsFORREAL(ArrayTest))
+};
 
 
-// function getFinalData(data){
-// 	const newArray = [];
-// 	for(let i = 0; i < data.length; i++){
-// 		if (data[i]["Stage"] === "Quarter-finals"){
-// 		newArray.push(data[i]);
-// 	} else if (data[i]["Stage"] === "Semi-finals"){
-// 		newArray.push(data[i])
-// 	}
-// 	}
-// 	//don't forget to return the newArray!
-// 	return newArray
-// }
-
-// console.log(getFinalData(fifaData));
+console.log(getFinalsFORREAL(ArrayTest))
 
 
-// function getFinalsData2(data){
-// 	let newArray = [];
-// 	newArray = data.filter(function(item){
-// 		return item["Stage"] === "Quarter-finals" 
-// 	});
-// 	return newArray
-
-// }
-
-// console.log(getFinalsData2(fifaData));
-
-///////////////////////////
-
-/* Task 3: Implement a higher-order function called `getYears` that accepts the callback function `getFinals`, 
-and returns an array called `years` containing all of the years in the dataset */
-
-
-function getYears(data, callback){
-    
-    let years = data.map(function(item){
-        //you have to say "return" for this array method, or it will come back as undefined
-        return item.Year;
-    })
-    return years
+function getFinalData(data){
+	const newArray = [];
+	for(let i = 0; i < data.length; i++){
+		if (data[i]["Stage"] === "Quarter-finals"){
+		newArray.push(data[i]);
+	} else if (data[i]["Stage"] === "Semi-finals"){
+		newArray.push(data[i])
+	}
+	}
+	//don't forget to return the newArray!
+	return newArray
 }
 
-console.log(getYears(fifaData, getFinals));
+console.log(getFinalData(fifaData));
+
+
+function getFinalsData2(data){
+	let newArray = [];
+	newArray = data.filter(function(item){
+		return item["Stage"] === "Quarter-finals" 
+	});
+	return newArray
+
+}
+
+console.log(getFinalsData2(fifaData));
+
+/* Task 3: Implement a higher-order function called `getYears` that accepts the callback function `getFinals`, and returns an array called `years` containing all of the years in the dataset */
+
+function getYears(array, callback) {
+
+	callback(array).map(function(item){
+		return item["Years"]
+	})
+
+
+};
 
 
 
-
-
-
-//ATTEMPT 1/////
-// function getYears(array, callback) {
-
-// 	callback(array).map(function(item){
-// 		return item["Years"]
-// 	})
-
-
-// };
-
-
+console.log(getYears(fifaData, getFinalsData2));
 
 /* Task 5: Implement a higher-order function called `getWinners`, that accepts 
 the callback function `getFinals()` and determine the winner (home or away) of each
  `finals` game. Return the name of all winning countries in an array called `winners` */ 
 //all a higher order function is is a function that takes another function
 
-function getWinners() {
-	
+function getWinners(array, callback) {
+	let winners = [];
     
 
 };
@@ -19149,6 +19089,278 @@ console.log(newArray2);
 //forEach does not give a new array
 console.log(elements);
 
+
+
+//.map
+//returns a new array of elements
+//gives you the element and index
+//usually for manipulating / reshaping data
+
+const dataOfCities = [
+  {"city":"seattle", "state":"WA", "population":652405, "land_area":83.9},
+  {"city":"new york", "state":"NY", "population":8405837, "land_area":302.6},
+  {"city":"boston", "state":"MA", "population":645966, "land_area":48.3},
+  {"city":"kansas city", "state":"MO", "population":467007, "land_area":315}
+];
+
+
+//to change the shape with just javascript:
+
+function mapClone(array){
+	//this one will take the combo array with objects in the for loop
+	const newArray = [];
+	for (let i = 0; i < array.length; i++){
+		//you'll create the objects in this for loop for the array:
+		let mappedObjectMaker = {};
+		//the below doesn't work as you have to say WHICH 
+		//element (currentValue in the array) you want!
+		// you need the [i]
+		// newArray.push(array["city"]);
+		// newArray.push(array["state"]);
+		//THIS INSTEAD:
+		//newArray.push(array[i].city)
+		//
+
+		//but how do you make it so it's a bunch of objects 
+		//in the array?
+		//you can't just push shit in, because this is an object..
+
+		mappedObjectMaker.city = array[i].city;
+		mappedObjectMaker.state = array[i].state;
+		//now, tell the for loop to stick this newly 
+		//made combo array into the actual array that will
+		//be returned from this function
+		newArray.push(mappedObjectMaker)
+		//then you reset the object so there isn't anything in the new object
+		//this seems to work properly without doing this, but heck just to show what you should do
+		mappedObjectMaker = {};
+		
+	}
+	//you can't return the array you just declared in another loop
+	//so you have to declare the array OUTSIDE the for loop
+	return newArray
+}
+
+console.log(mapClone(dataOfCities));
+
+
+//HOW TO DO IT WITH A .MAP ARRAY METHOD (CALLBACK FUNCTION)
+const mappedCityStates = dataOfCities.map(function(item) {
+	return {city: item.city, state: item.state }
+})
+
+
+console.log(mappedCityStates)
+
+//With map you can return a new shape of this item 
+//the best par is .map doesn't manipulate the original data
+
+/////////
+
+//.filter - returns a new array of elements (items)
+// these are all iterators, they'll loop through the entire array untless 
+//you tell them not to
+//takes a callback that runs a "truth" test
+//if true, it returns the element, or it will ignore it
+
+//used for filtering out array elements by a specific condition
+
+//really good for searching for a search bar
+
+//to filter out data just with basic JS:
+
+function filterClone(array){
+	//(If we want to return a new array with objects)
+	const newArray = [];
+
+	for (let i = 0; i < array.length; i++){
+		
+		if(array[i].city === "seattle"){
+			let objectMaker = {};
+			objectMaker.city = array[i].city;
+			objectMaker.state = array[i].state;
+			newArray.push(objectMaker);
+		}
+
+	}
+	return newArray
+}
+
+console.log(filterClone(dataOfCities));
+
+
+//let's try this now again just to get good at JS arrays 
+//n shit
+
+function filterPopulation(array){
+	const newArray = [];
+	for(let i = 0; i < array.length; i++){
+		if(array[i].population >= 650000){
+			
+			newArray.push(array[i].city);
+
+		}
+	}
+	return newArray
+
+}
+
+
+console.log(filterPopulation(dataOfCities));
+
+
+///how you can do it using the filter array method
+
+const filterPopulationusingFilter = dataOfCities.filter(function(item){
+	//because this is a pre-set higher order function, 
+	//inside you're just creating an ananonymous function CALLBACK 
+	//your callback tells the pre-made out of the box array method 
+	//what you want and then it will follow its "receipe" to do it
+
+	//it's already iterating through the array so you just 
+	//call the item (element in the array) - "item" can be called anything, it's just a placeholder
+	return item.population >= 650000;
+})
+
+console.log(filterPopulationusingFilter)
+
+
+//if you wanted to get faancy and filter then just return a few things...
+
+//if you want to get fancy and call specific things then you can use the index to get more specific..
+//eg: making a new array with objects in it and you want to specificlly just filter those and make a fancy new array
+const fancyFilter = dataOfCities.filter(function(item, index){
+	//we want to return those objects whose population is 650000
+	return item.population >= 650000	
+})
+
+console.log(fancyFilter);
+
+/////thought.....
+//WHAT IF, you want to put it all in a customized new array?
+	//1st go to the documentation and understand the filter array method
+
+//This doesnt work atm, look into it later--->
 //
+// const fancyFilter2 = dataOfCities.filter(function(item, index, array){
+// 	// YOU DON'T HAVE TO DO ALL THIS:
+// 	//let newObject = {};
+// 	// newObject.city = array[index].city;
+// 	// newObject.state = array[index].city;
+// 	//..... etc..
+
+// 	// instead you can just do this:
+// 	return {city: item.city, state: item.state} >= 650000 
+
+// })
+
+// console.log(fancyFilter2)
+
+
+//.reduce Array Method
+
+//reduce returns a new array of elements
+//takes a callback which is a reducer function
+//basicaally takes an entire data set and turns it into one piece of data
+//takes an: 
+//accumulator - the thing you will return and update
+//currentValue - (or item as we've been using above)
+//used to manipulate / reshape data into a single value
+
+//a lot of use in massive sums / averages across datasets
+
+//using plain old vanilla JS:
+
+function totalPopulation(array){
+	//not a constant as we will change this number 
+	let totalPop = 0;
+	for(let i = 0; i < array.length; i++){
+		
+		totalPop = array[i].population + totalPop;
+		//The += essentially means (in your parlance)
+		// txt = txt + a + b. 
+		//When dealing with a string, it takes the value currently in the string 
+		//--> and APPENDS the value after the += symbol. <--
+		//It’s the javascript equivalent of .= in php
+
+		//the shorter way to write could also be:
+		// totalPop += array[i].population; 
+	}
+	return totalPop
+
+}
+
+console.log(totalPopulation(dataOfCities));
+
+//now using the reduce function
+
+const totalPopReduce = dataOfCities.reduce(function(accumulator, currentValue){
+	//instead of array for the for loop, the reduce method array already gets the array.. 
+	//just say you are doing the item for i
+	//you still have to call which part of the objects in the array you want to sum up
+	return accumulator = accumulator + currentValue.population;
+
+}, 0);
+
+console.log(totalPopReduce);
+
+
+//practice with all the array methods
+
+const arrayofPop = dataOfCities.map(function(item){
+	return item.population;
+});
+
+console.log(arrayofPop);
+
+
+const arrayofPopArrow = dataOfCities.map(item => item.population);
+
+console.log(arrayofPopArrow);
+
+const largeLandAreas = dataOfCities.filter(function(item){
+	return item.land_area >= 50;
+});
+
+
+console.log(largeLandAreas);
+
+//find the mean of the land area of all cities...
+// in this first try I give a shot-- I'm trying to do it all in
+//the reducer function...
+//instead, think "what are the things the reducer needs?"
+//!!!!!
+//do it outside of the reduce function, 
+//rather than trying to jam it all in there.
+
+
+// const meanArea = dataOfCities.reduce(function(accumulator, currentValue){
+// 	total = currentValue.land_area + accumulator
+// 	accumulator = total / currentValue.length 
+
+// })
+
+//we'll use this to divide:
+const state = dataOfCities.length
+
+//then we need a reducer function (or a for loop to iterate through)
+
+//if you make it a variable, then bam, you can use it in a formula 
+
+let totallandarea = dataOfCities.reduce(function(accumulator, currentValue){
+	return accumulator = currentValue.land_area + accumulator
+}, 0)
+
+
+let averageArea = totallandarea/state
+
+console.log(averageArea);
+
+
+
+
+
+
+
 
 
