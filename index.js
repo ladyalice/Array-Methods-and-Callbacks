@@ -18771,46 +18771,16 @@ console.log(awayGoals)
 
 
 
-
-//////ATTEMPT 1 - RETIRED ////////
-/// Other attempts not using array methods / using console log like a dufus/////
-
-
-// console.log(fifaData[0]["Stage"])
-
-// fifaData.filter(function(item){
-// 	if (item["Year"] === 2014){
-// 		console.log(`Home team name: ${item["Home Team Name"]}.`);
-// 		console.log(`Away Team name: ${item["Away Team Name"]}.`)
-// 	}});
-
-// //.map creates a new array so we can just make it equal to the const
-// //aka currentValue being accessed in the array
-// const goals = fifaData.map(function(item){
-// 	if (item["Year"] === 2014){
-// 		console.log( `Homie channel goals: ${item["Home Team Goals"]}`)
-		
-
-// 	}
-
-// } );
-
-////////////////////////////////////////
-
 /* Task 2: Create a function called  getFinals that takes `data` as an argument and returns an array of objects with only finals data */
 
 function getFinals(data){
     let newArray = [];
     for(let i = 0; i < data.length; i++){
         
-        if(data[i].Stage === "Quarter-finals"){
+        if(data[i].Stage === "Final"){
              //newArray.push(data[i]["Stage"]);
              newArray.push(data[i]);
-        } else if (data[i].Stage === "Semi-finals"){
-             //newArray.push(data[i]["Stage"]);
-             //later on in Task 3 they want the years, so we need an array with all the data... strangely worded question
-             newArray.push(data[i]);
-        }
+        } 
     
     }
 return newArray
@@ -18819,105 +18789,15 @@ return newArray
 console.log(getFinals(fifaData));
 
 
-
-//////ATTEMPT 1 - RETIRED ////////
-
-//Kook city = Break stuff down. If it isn't working, keep console.logging 
-//to the most basic things you know about JS...
-//read the documentation then, to 
-//get a fundamental understanding do hella console logs
-
-// function getFinals(data){
-	
-// const newArray = [];
-// 	for(let i = 0; i < data.length; i++){
-	
-// 		//BRUH - it's not a method-- you have to tell it to give you things../ return things
-// 		newArray.push("Hello");
-// 		return newArray[0]
-// 	// 	if (data[i]["Stage"] === "Quarter-finals") {
-
-// 	// 	newArray.push(data[i]);
-// 	// 	console.log(newArray)
-// 	// } 
-// 	// else if (data[i]["Stage"] === "Semi-finals"){
-// 	// 	newArray.push(data[i]);
-// 	// }
-// 	// }
-// };
-// console.log(getFinals(ArrayTest));
-
-//LETS TRY THIS SHIT AGAIN
-
-// function getFinalsFORREAL(data){
-// 	const newArray = [];
-
-// 	for(let i = 0; i < data.length ; i++){
-// 		//you can't do data.bruh as that key above because you're not support
-// 		//to know the keys in that. this is a function getting any random array set..
-// 		//now you could do an if statement to filter out things..
-
-
-// 		//newArray.push(data[i])
-
-// 		//if you don't do a return / console log you ain't gonna 
-// 		//get nothing back if you're trying to console log something
-		 
-// 		 if (data[i].bruh === true)
-// 		 {
-// 		 	newArray.push("It's true")
-// 		 }
-
-
-// 	}
-// 	//return AFTER the for statement so you don't
-// 	//end the for loop
-// 		return newArray
-
-// };
-
-
-// console.log(getFinalsFORREAL(ArrayTest))
-
-
-// function getFinalData(data){
-// 	const newArray = [];
-// 	for(let i = 0; i < data.length; i++){
-// 		if (data[i]["Stage"] === "Quarter-finals"){
-// 		newArray.push(data[i]);
-// 	} else if (data[i]["Stage"] === "Semi-finals"){
-// 		newArray.push(data[i])
-// 	}
-// 	}
-// 	//don't forget to return the newArray!
-// 	return newArray
-// }
-
-// console.log(getFinalData(fifaData));
-
-
-// function getFinalsData2(data){
-// 	let newArray = [];
-// 	newArray = data.filter(function(item){
-// 		return item["Stage"] === "Quarter-finals" 
-// 	});
-// 	return newArray
-
-// }
-
-// console.log(getFinalsData2(fifaData));
-
-///////////////////////////
-
 /* Task 3: Implement a higher-order function called `getYears` that accepts the callback function `getFinals`, 
 and returns an array called `years` containing all of the years in the dataset */
 
 
-function getYears(data, callback){
+function getYears(data, callbackFinals){
     
-    let years = data.map(function(item){
+    let years = callbackFinals(data).map(function(item){
         //you have to say "return" for this array method, or it will come back as undefined
-        return item.Year;
+         return item.Year;
     })
     return years
 }
@@ -18927,32 +18807,34 @@ console.log(getYears(fifaData, getFinals));
 
 
 
-
-
-//ATTEMPT 1/////
-// function getYears(array, callback) {
-
-// 	callback(array).map(function(item){
-// 		return item["Years"]
-// 	})
-
-
-// };
-
-
-
 /* Task 5: Implement a higher-order function called `getWinners`, that accepts 
 the callback function `getFinals()` and determine the winner (home or away) of each
  `finals` game. Return the name of all winning countries in an array called `winners` */ 
 //all a higher order function is is a function that takes another function
 
-function getWinners() {
-	
+//BASICALLY A CALLBACK IS WHAT YOU USE WHEN YOU WANT TO KEEP DOING STUFF TO A DATASET 
+//At least in this example
+
+function getWinners(data, callbackFinals) {
+	let finals = callbackFinals(data);
+    let winner = [];
+    for(let i = 0; i < finals.length; i++){
+
+        if(finals[i]["Home Team Goals"] > finals[i]["Away Team Goals"]){
+             winner.push(data[i]["Home Team Name"]);
+        } else if (finals[i]["Home Team Goals"] < finals[i]["Away Team Goals"]){
+             winner.push(finals[i]["Away Team Name"]);
+        }
+        else if (finals[i]["Home Team Goals"] === finals[i]["Away Team Goals"]){ 
+             winner.push(`${finals[i]["Home Team Name"]} = ${finals[i]["Away Team Name"]}`);
+        }
+    }
+    return winner
     
 
 };
 
-console.log(getWinners());
+console.log(getWinners(fifaData, getFinals));
 
 /* Task 6: Implement a higher-order function called `getWinnersByYear` that accepts the following parameters and returns a set of strings "In {year}, {country} won the world cup!" 
 
@@ -18961,20 +18843,51 @@ Parameters:
  * callback function getYears
  */
 
-function getWinnersByYear(/* code here */) {
+function getWinnersByYear(data, callbackFinals, callbackWinner, callbackYear) {
+    
+    let countryWinners = callbackWinner(data, callbackFinals);
+    let years = callbackYear(data, callbackFinals);
+    let winnersByYear = [];
 
+    for(let i = 0; i < countryWinners.length; i++){
+
+        winnersByYear.push(`In ${years[i]}, ${countryWinners[i]} won.`)
+        ///You can't do the thing below, because it asks for arguments for your parmeters...
+
+     //return `In ${callbackYear(data[i])}, ${callbackWinner(data[i])} won the world cup!`
+     //Instead you give it the parameters and THEN it returns the string
+     //You can't do this either-- you need the items in each array
+     // return `In ${callbackYear(data, getFinals)}, ${callbackWinner(data, getYears)} won.`
+
+
+ };
+ return winnersByYear;
 };
 
-getWinnersByYear();
+
+
+console.log(getWinnersByYear(fifaData, getFinals, getWinners, getYears));
 
 /* Task 7: Create a function called `getCountryWins` that takes the parameters `data` and `team initials` and returns the number of world cup wins that country has had. 
 
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
+function getCountryWins(data, teamInitials) {
+    //Overwhelmed? Simply break it down!
 
-    /* code here */
+    //we need the team initals
+    //we need the ones only with world cup wins.
+    //then we need to say how many wins that country has had
+    //We also need to loop over the data of WINNERS to ensure we get all the countries
+    //then we use reduce to see how many wins that country has had in the data set.
+    //OR MAYBE I'm making it more complex than it needs to be?
+    
+    //think.... reduce ALREADY goes through the whole dataset... (read the documentation to
+    //understand what array does
+    //so you could find the initial, then reduce each one in a 
+    //filter / for loop
+    let data.
 
 };
 
@@ -18982,22 +18895,37 @@ getCountryWins();
 
 /* Task 8: Write a function called `getAverageGoals` that accepts a parameter `data` and returns the the average number of home team goals and away team goals scored per match (Hint: use .reduce and do this in 2 steps) */
 
-function getAverageGoals(/* code here */) {
+function getAverageGoals(data) {
+    //do it in steps..
+    //first you want to get the average of all the  
+    let sumHomeGoals = data.reduce(function(accumulator, currentValue){
+        return accumulator += (currentValue["Home Team Goals"]);
+    }, 0)
+    let sumAwayGoals = data.reduce(function(accumulator, currentValue){
+        return accumulator += (currentValue["Away Team Goals"]);
+    }, 0)
+    let averageHomeGoals = sumHomeGoals/data.length;
+    let averageAwayGoals = sumAwayGoals/data.length;
 
-    /* code here */
-
+    return 'Average Home Goals: ' + averageHomeGoals + ' Average Away Goals: ' + averageAwayGoals;
 };
 
-getAverageGoals();
 
+console.log(getAverageGoals(fifaData));
+
+//omfogsh I got it. I don't think this is 100% right but it's close!! 
+//need to think of the use case and practically about what sort of data I'd want myself if I was asking for this.
+// eg: I think for this maybe the purpose is that they want to see if being away impacts their goals..
+
+//eg: one thing I don't know about this dataset is whether or not the half time goals are separate or included in the home team goals as a total or not...
 
 /// STRETCH 🥅 //
 
 /* STRETCH 1: Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
-function getGoals(/* code here */) {
+function getGoals(data) {
 
-    /* code here */
+  
 
 };
 
