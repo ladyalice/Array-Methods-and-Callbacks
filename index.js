@@ -18887,7 +18887,7 @@ function getCountryWins(data, teamInitials) {
     //understand what array does
     //so you could find the initial, then reduce each one in a 
     //filter / for loop
-    let data.
+   
 
 };
 
@@ -18925,7 +18925,7 @@ console.log(getAverageGoals(fifaData));
 
 function getGoals(data) {
 
-  
+
 
 };
 
@@ -19077,6 +19077,203 @@ console.log(newArray2);
 //forEach does not give a new array
 console.log(elements);
 
-//
+//LAMBDA SCHOOL 
+
+//Notes for Prototypes and Inheritance
+
+//"This" - has nothing to do with where the function is written
+//"This has to do with WHERE and WHEN your function is called
+//4 principles - Which all have to do with binding
+
+function sayName(name){
+    console.log(this);
+    return name;
+}
+
+sayName("Angelo");
+//when in the global scope, the value of "this"
+//will be the window/console Object
+
+
+//implicit binding
+const myObj = {
+    greeting: 'Hello',
+    sayHello: function(name){
+        return `${this.greeting} my name is ${name}`;
+
+    }
+};
+
+//a property whose value is a functon on an object is a method
+console.log(myObj.sayHello(`Amanda`));
+
+//whenever a function is called by a preceding dat, 
+//the object before the dot is 'this'.
+
+//the new binding has to do with constructor functions
+
+function cordialPerson(greeter){
+    this.greeting = 'hello';
+    this.greeter = greeter;
+    this.speak = function(){
+        console.log(this.greeting + this.greeter);
+        console.log(this)
+    }
+};
+
+const jerry = new cordialPerson('Newman');
+const newman = new cordialPerson('Jerry');
+
+jerry.speak();
+newman.speak();
+
+
+/////Lecture - Britt Hemming
+//Prorotypes and Inheritance
+
+//WTF is "This" Youtube
+//allows us to reduce functions with different context
+
+//4 rules:
+//implicit bindining
+//explicit binding
+//new binding
+//window binding
+//ask yourself: where is this function invoked?
+
+
+//1. Implicit Binding
+// Left of the dot at call time
+
+let me = {
+    name: 'Alice',
+    age: 31,
+    sayName: function(){
+        console.log(this.name);
+    }
+
+}
+
+me.sayName();
+//implicit bindings says that when you call a function,
+//look to the left of the dot.
+// so after .sayName(). ... 
+//me is what the "this" references.
+//so... Alice would be returned
+
+let sayNameMixin = function(object){
+    //this function will take an object and add 
+    //a sayName property onto this object
+    object.sayName = function(){
+        console.log(this.name);
+
+    }
+};
+
+//so now we can make another me object with a name
+
+let friend = {
+    name: `irina`,
+    age: 28 
+}
+
+let friend2 = {
+    name: 'Erica',
+    age: 30
+}
+
+//Now you can pass both objects into the mixin
+sayNameMixin(friend);
+sayNameMixin(friend2);
+//now it will decorate them with a new sayName property
+
+friend.sayName();
+friend2.sayName();
+
+/////
+//person function that returns us an object
+let Person = function(name, age){
+    return {
+        name: name,
+        age: age,
+        //a name method
+        sayName: function(){
+            console.log(this.name);
+        },
+        mother: {
+            name: 'Regina Fischer',
+            sayName: function(){
+                console.log(this.name);
+            }
+        }
+    }
+
+};
+
+//Now if you create a new instance of this class
+
+let bobby = Person('Bobby Fischer', 12);
+//now when you call bobby.sayName
+bobby.sayName();
+//ask yourself what is to the left of the dot ??
+//bobby is so it will give us bobby
+bobby.mother.sayName();
+//who will this calL?
+//look to the left of the dot.. 
+// it will call Regina as that's to the left of the dot
+//(this is calling  a method on an object)
+
+//2. Explicit Binding
+
+//now... what if we took sayName out of the function above?
+
+let sayName2 = function(lang1, lang2, lang3){
+    console.log(`My name is ${this.name} and I know ${lang1}, ${lang2}, ${lang3}.`)
+};
+//so instead of being a method on the object, 
+//now it's just a function currently in the global scope
+
+let regina = {
+    name: 'Regina Fischer',
+    age: 42,
+};
+//now we want to call this function in the context of regina.
+
+//every function has a dot call property that allows us to 
+//do that.
+
+const languages = ['JS', 'Ruby', 'Python'];
+
+sayName2.call(regina, languages[0], languages[1], languages[2]);
+
+// as you can see above, that is stupid for languages...
+//wouldn't it be cool if JS could parse out that? 
+
+
+sayName2.apply(regina, languages); 
+//with .apply, you can pass an array of arguements and it will parse through it for us
+
+
+let newFunction = sayName2.bind(regina, languages[0], languages[1], languages[2]);
+//this creates a function and binds these so you can call it later
+
+console.log(`newFunction is below`);
+newFunction();
+
+//bind allows you to explicity state what the this keyword is going to be in a function
+
+
+
+////SO
+//.call you apply and bind to explicitly state what
+//the this keyword in any given function
+
+//.call and .apply do the same thing-- they immediately invoke the function
+//but with .call you pass arguments one by one..
+//with .apply you pass them in as an array
+
+
+
+
 
 
